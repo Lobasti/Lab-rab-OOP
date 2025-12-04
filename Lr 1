@@ -1,0 +1,63 @@
+package lr1;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+
+class Product {
+    String name;        
+    double price;       
+    int sum;       
+    boolean exis;    
+    
+    public Product(String name, double price, int sum, boolean exis) {
+        this.name = name;
+        this.price = price;
+        this.sum = sum;
+        this.exis = exis;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s,%.2f,%d,%b", name, price, sum, exis);
+    }
+}
+
+public class ProductManager {
+    public static void main(String[] args) {
+        Product[] products = {
+            new Product("Ноутбук", 45000.50, 10, true),
+            new Product("Смартфон", 25000.99, 15, true),
+            new Product("Планшет", 18000.75, 5, false),
+            new Product("Наушники", 3500.25, 20, true),
+            new Product("Мышь", 1200.50, 30, true),
+            new Product("Клавиатура", 2500.75, 12, true),
+            new Product("Монитор", 12000.99, 8, true),
+            new Product("Принтер", 15000.50, 6, false),
+            new Product("Видеокарта", 35000.25, 4, true),
+            new Product("Колонки", 5000.75, 17, true),
+            new Product("Роутер", 2800.50, 14, true),
+            new Product("Жесткий диск", 4500.99, 22, true)
+        };
+
+        Arrays.sort(products, Comparator.comparingDouble(p -> p.price));
+        saveToFile(products, "products_by_price.txt");
+
+        Arrays.sort(products, Comparator.comparingInt(p -> p.sum));
+        saveToFile(products, "products_by_sum.txt");
+
+        Arrays.sort(products, Comparator.comparing(p -> p.name));
+        saveToFile(products, "products_by_name.txt");
+    }
+
+    private static void saveToFile(Product[] products, String filename) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            for (Product product : products) {
+                writer.write(product.toString() + "\n");
+            }
+        } catch (IOException e) {
+            // Тихая обработка ошибки без вывода
+        }
+    }
+}
