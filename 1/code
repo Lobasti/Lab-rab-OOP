@@ -42,13 +42,13 @@ public class ProductManager {
         };
 
         Arrays.sort(products, Comparator.comparingDouble(p -> p.price));
-        saveToFile(products, "products_by_price.txt");
+        saveToFile(products, "product_price.txt");
 
         Arrays.sort(products, Comparator.comparingInt(p -> p.sum));
-        saveToFile(products, "products_by_sum.txt");
+        saveToFile(products, "product_sum.txt");
 
         Arrays.sort(products, Comparator.comparing(p -> p.name));
-        saveToFile(products, "products_by_name.txt");
+        saveToFile(products, "product_name.txt");
     }
 
     private static void saveToFile(Product[] products, String filename) {
@@ -57,7 +57,6 @@ public class ProductManager {
                 writer.write(product.toString() + "\n");
             }
         } catch (IOException e) {
-            // Тихая обработка ошибки без вывода
         }
     }
 }
