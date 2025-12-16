@@ -1,1 +1,51 @@
-
+	import javax.swing.*;
+	import java.awt.event.ActionEvent;
+	import java.awt.event.ActionListener;
+	
+	public class SimpleLoanCalculator {
+	    public static void main(String[] args) {
+	        JFrame frame = new JFrame("калькулятор кредита");
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        frame.setSize(300, 300);
+	        
+	        JLabel sum = new JLabel("Сумма кредита:");
+	        JTextField sums = new JTextField(15);
+	        
+	        JLabel yearpr = new JLabel("Годовая ставка:");
+	        JTextField yearprs = new JTextField(15);
+	        
+	        JLabel year = new JLabel("Срок кредита:");
+	        JTextField years = new JTextField(15);
+	        
+	        JButton Button = new JButton("Рассчитать");
+	        JLabel result = new JLabel("Ежемесячный платеж: ");
+	        
+	        Button.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                double sumcredit = Double.parseDouble(sums.getText());
+	                double procent = Double.parseDouble(yearprs.getText()) / 100;
+	                int period = Integer.parseInt(years.getText());
+	
+	                double monthpr = procent / 12;
+	                int total = period * 12;
+	
+	                double monthpay = (sumcredit * monthpr) / (1 - Math.pow(1 + monthpr, -total));
+	
+	                result.setText(String.format("Ежемесячный платеж: %.2f", monthpay));
+	            }
+	        });
+	        
+	        JPanel panel = new JPanel();
+	        panel.add(sum);
+	        panel.add(sums);
+	        panel.add(yearpr);
+	        panel.add(yearprs);
+	        panel.add(year);
+	        panel.add(years);
+	        panel.add(Button);
+	        panel.add(result);
+	
+	        frame.add(panel);
+	        frame.setVisible(true);
+	    }
+	}
