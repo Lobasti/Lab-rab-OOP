@@ -1,0 +1,169 @@
+Addition.java
+  package ll3;
+
+public class Addition implements ArithmeticOperation {
+    @Override
+    public String getOperationName() {
+        return "Сложение";
+    }
+
+    @Override
+    public String getOperationSymbol() {
+        return "+";
+    }
+
+    @Override
+    public double execute(double a, double b) {
+        return a + b;
+    }
+}
+
+
+
+Division.java
+  package ll3;
+
+public class Division implements ArithmeticOperation {
+    @Override
+    public String getOperationName() {
+        return "Деление";
+    }
+
+    @Override
+    public String getOperationSymbol() {
+        return "/";
+    }
+
+    @Override
+    public double execute(double a, double b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("Деление на ноль невозможно");
+        }
+        return a / b;
+    }
+}
+
+
+MaxOperation.java
+  package ll3;
+
+public class MaxOperation implements ArithmeticOperation {
+    @Override
+    public String getOperationName() {
+        return "Нахождение максимума";
+    }
+
+    @Override
+    public String getOperationSymbol() {
+        return "max";
+    }
+
+    @Override
+    public double execute(double a, double b) {
+        return Math.max(a, b);
+    }
+}
+
+
+
+MinOperation.java
+package ll3;
+
+public class MinOperation implements ArithmeticOperation {
+    @Override
+    public String getOperationName() {
+        return "Нахождение минимума";
+    }
+
+    @Override
+    public String getOperationSymbol() {
+        return "min";
+    }
+
+    @Override
+    public double execute(double a, double b) {
+        return Math.min(a, b);
+    }
+}
+
+
+
+Multiplication.java
+  package ll3;
+
+public class Multiplication implements ArithmeticOperation {
+    @Override
+    public String getOperationName() {
+        return "Умножение";
+    }
+
+    @Override
+    public String getOperationSymbol() {
+        return "*";
+    }
+
+    @Override
+    public double execute(double a, double b) {
+        return a * b;
+    }
+}
+
+
+
+Subtraction.java
+package ll3;
+
+public class Subtraction implements ArithmeticOperation {
+    @Override
+    public String getOperationName() {
+        return "Вычитание";
+    }
+
+    @Override
+    public String getOperationSymbol() {
+        return "-";
+    }
+
+    @Override
+    public double execute(double a, double b) {
+        return a - b;
+    }
+}
+
+
+ArithmeticOperation.java
+package ll3;
+
+public interface ArithmeticOperation {
+    String getOperationName();
+    String getOperationSymbol();
+    double execute(double a, double b);
+}
+
+
+main.java
+
+package ll3;
+
+public class Main {
+    public static void main(String[] args) {
+        ArithmeticOperation addition = new Addition();
+        ArithmeticOperation subtraction = new Subtraction();
+        ArithmeticOperation multiplication = new Multiplication();
+        ArithmeticOperation division = new Division();
+        ArithmeticOperation maxOperation = new MaxOperation();
+        ArithmeticOperation minOperation = new MinOperation();
+
+        double a = 10;
+        double b = 5;
+
+        System.out.println(addition.getOperationName() + " (" + addition.getOperationSymbol() + "): " + addition.execute(a, b));
+        System.out.println(subtraction.getOperationName() + " (" + subtraction.getOperationSymbol() + "): " + subtraction.execute(a, b));
+        System.out.println(multiplication.getOperationName() + " (" + multiplication.getOperationSymbol() + "): " + multiplication.execute(a, b));
+        System.out.println(division.getOperationName() + " (" + division.getOperationSymbol() + "): " + division.execute(a, b));
+        System.out.println(maxOperation.getOperationName() + " (" + maxOperation.getOperationSymbol() + "): " + maxOperation.execute(a, b));
+        System.out.println(minOperation.getOperationName() + " (" + minOperation.getOperationSymbol() + "): " + minOperation.execute(a, b));
+    }
+}
+
+  
