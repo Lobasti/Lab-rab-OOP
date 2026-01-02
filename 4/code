@@ -1,0 +1,41 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class StringLengthCategorizer {
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Длина строк");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 250);
+        frame.setLayout(new FlowLayout());
+
+        JTextField textField = new JTextField(15);
+        JLabel textInfoLabel = new JLabel("Введите строку...");
+
+        textField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                String text = textField.getText();
+                int length = text.length();
+                String lengths;
+
+           
+                if (length <= 5) {
+                    lengths = "Короткая";
+                } else if (length <= 10) {
+                    lengths = "Нормальная";
+                } else {
+                    lengths = "Длинная";
+                }
+                textInfoLabel.setText("Строка: '" + text + "', Длина: " + length + ", Характеристика: " + lengths);
+            }
+        });
+
+        frame.add(textField);
+        frame.add(textInfoLabel);
+
+        frame.setVisible(true);
+    }
+}
