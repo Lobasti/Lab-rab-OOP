@@ -1,0 +1,52 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SimpleCalculator {
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Калькулятор");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 200);
+        frame.setLayout(new FlowLayout());
+
+      
+        JTextField input1 = new JTextField(10);
+        JTextField input2 = new JTextField(10);
+        JButton divide = new JButton("Разделить");
+        JLabel res = new JLabel("Результат: ");
+
+        divide.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double num1 = Double.parseDouble(input1.getText());
+                    double num2 = Double.parseDouble(input2.getText());
+
+         
+                    if (num2 == 0) {
+                        throw new ArithmeticException("Ошибка: деление на ноль недопустимо!");
+                    }
+
+                    double result = num1 / num2;
+                    res.setText("Результат: " + result);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(frame, "Пожалуйста, введите корректные числа.", "Ошибка ввода", JOptionPane.ERROR_MESSAGE);
+                } catch (ArithmeticException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+ 
+        frame.add(new JLabel("Введите первое число: "));
+        frame.add(input1);
+        frame.add(new JLabel("Введите второе число: "));
+        frame.add(input2);
+        frame.add(divide);
+        frame.add(res);
+
+        frame.setVisible(true);
+    }
+}
