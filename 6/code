@@ -1,0 +1,96 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
+
+public class MovingObjectsApp {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Moving Objects");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 800);
+        frame.setLocation(200, 200);
+        frame.setLayout(new BorderLayout());
+
+        MovingPanel movingPanel = new MovingPanel();
+        frame.add(movingPanel, BorderLayout.CENTER);
+        
+        frame.setVisible(true);
+        
+ 
+        Ball ball1 = new Ball(movingPanel, new Color(255, 0, 0), 2);
+        Ball ball2 = new Ball(movingPanel, new Color(0, 255, 0), 3);
+        Ball ball3 = new Ball(movingPanel, new Color(0, 0, 255), 4);
+
+        ball1.start();
+        ball2.start();
+        ball3.start();
+    }
+
+    static class MovingPanel extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            this.setBackground(Color.WHITE);
+        }
+
+        public void drawBall(int x, int y, Color color) {
+            Graphics g = getGraphics();
+            g.setColor(color);
+            g.fillOval(x, y, 30, 30);
+        }
+
+        public void clearBall(int x, int y) {
+            Graphics g = getGraphics();
+            g.setColor(Color.WHITE);
+            g.fillOval(x, y, 30, 30);
+        }
+    }
+
+    static class Ball extends Thread {
+        private final MovingPanel panel;
+        private final Color color;
+        private int x, y;
+        private int speed;
+        private int directionX, directionY;
+        private static final int SIZE = 30; 
+
+        public Ball(MovingPanel panel, Color color, int speed) {
+            this.panel = panel;
+            this.color = color;
+            this.speed = speed;
+            Random rand = new Random();
+        
+            this.x = rand.nextInt(panel.getWidth() - SIZE);
+            this.y = rand.nextInt(panel.getHeight() - SIZE);
+  
+            this.directionX = rand.nextBoolean() ? speed : -speed;
+            this.directionY = rand.nextBoolean() ? speed : -speed;
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+        
+                panel.clearBall(x, y);
+              
+                x += directionX;
+                y += directionY;
+
+                if (x < 0 || x > panel.getWidth() - SIZE) {
+                    directionX = -directionX; 
+                }
+                if (y < 0 || y > panel.getHeight() - SIZE) {
+                    directionY = -directionY; 
+                }
+
+        
+                panel.drawBall(x, y, color);
+
+                try {
+                    Thread.sleep(20); 
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}
